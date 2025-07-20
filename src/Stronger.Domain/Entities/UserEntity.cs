@@ -4,10 +4,11 @@ namespace Stronger.Domain.Entities;
 
 public class UserEntity : EntityBase<Guid>
 {
-    String Forename { get; set; }    String Surname { get; set; }
-    DateOnly Dob { get; set; }
-    String Email { get; set; }
-    String PasswordHash { get; set; }
+    public String Forename { get; set; }
+    public String Surname { get; set; }
+    public DateOnly Dob { get; set; }
+    public String Email { get; set; }
+    public String PasswordHash { get; set; }
 
     public UserEntity()
     {
