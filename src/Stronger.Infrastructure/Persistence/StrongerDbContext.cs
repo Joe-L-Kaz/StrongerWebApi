@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Domain.Entities;
+using Stronger.Infrastructure.Configuration;
 
 namespace Stronger.Infrastructure.Persistence;
 
@@ -14,5 +15,11 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
     {
         ChangeTracker.DetectChanges();
         return base.SaveChangesAsync(cancellationToken);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<UserEntity>());
+        base.OnModelCreating(modelBuilder);
     }
 }
