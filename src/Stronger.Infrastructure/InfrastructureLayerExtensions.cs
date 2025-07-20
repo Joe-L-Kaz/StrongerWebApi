@@ -13,7 +13,7 @@ public static class InfrastructureLayerExtensions
         services
             .AddDbContext<StrongerDbContext>(options =>
             {
-                options.UseMySql(configuration.GetConnectionString("MySqlConnection"), ServerVersion.AutoDetect(configuration.GetConnectionString("MySqlConnection")));
+                options.UseMySql(configuration.GetConnectionString("MySql")!, ServerVersion.AutoDetect(configuration.GetConnectionString("MySql")));
             })
             .AddScoped<IStrongerDbContext>(sp => sp.GetRequiredService<StrongerDbContext>());
 
