@@ -1,6 +1,7 @@
 using System.Reflection;
 using MediatR;
 using Stronger.Application.UseCases;
+using Stronger.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-builder.Services.AddApplicationLayer();
+builder.Services
+    .AddApplicationLayer()
+    .AddInfrastructureLayer(builder.Configuration);
+
 
 var app = builder.Build();
 
