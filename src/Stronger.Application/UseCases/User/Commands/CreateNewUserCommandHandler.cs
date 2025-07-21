@@ -35,11 +35,7 @@ public class CreateNewUserCommandHandler(IStrongerDbContext context, IMapper map
 
         return new Response
         {
-            StatusCode = 201,
-            Content = new
-            {
-                Id = entity.Id
-            }
+            StatusCode = 204
         };
     }
 }
