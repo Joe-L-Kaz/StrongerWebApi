@@ -17,5 +17,12 @@ namespace Stronger.Api.Controllers
             ArgumentNullException.ThrowIfNull(cmd);
             return await this.SendAsync(cmd, cancellationToken);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AuthenticateAsync(AuthenticateUserCommand cmd, CancellationToken cancellationToken)
+        {
+            ArgumentNullException.ThrowIfNull(cmd);
+            return await this.SendAsync(cmd, cancellationToken);
+        }
     }
 }

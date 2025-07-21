@@ -17,7 +17,8 @@ public static class InfrastructureLayerExtensions
                 options.UseMySql(configuration.GetConnectionString("MySql")!, ServerVersion.AutoDetect(configuration.GetConnectionString("MySql")));
             })
             .AddScoped<IStrongerDbContext>(sp => sp.GetRequiredService<StrongerDbContext>())
-            .AddScoped<IPasswordService, PasswordService>();
+            .AddScoped<IPasswordService, PasswordService>()
+            .AddScoped<ITokenService, TokenService>();
 
         return services;
     }
