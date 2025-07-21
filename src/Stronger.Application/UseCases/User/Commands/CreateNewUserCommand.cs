@@ -1,4 +1,5 @@
 using MediatR;
+using Stronger.Domain.Responses;
 
 namespace Stronger.Application.UseCases.User.Commands;
 
@@ -8,4 +9,4 @@ public record class CreateNewUserCommand(
     DateOnly Dob,
     String Email,
     String Password
-) : IRequest<Guid>;
+) : IRequest<Response>;
