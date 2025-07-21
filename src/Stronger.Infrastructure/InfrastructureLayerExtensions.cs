@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Stronger.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Common.Interfaces;
+using Stronger.Infrastructure.Services;
 
 namespace Stronger.Infrastructure;
 
@@ -15,7 +16,8 @@ public static class InfrastructureLayerExtensions
             {
                 options.UseMySql(configuration.GetConnectionString("MySql")!, ServerVersion.AutoDetect(configuration.GetConnectionString("MySql")));
             })
-            .AddScoped<IStrongerDbContext>(sp => sp.GetRequiredService<StrongerDbContext>());
+            .AddScoped<IStrongerDbContext>(sp => sp.GetRequiredService<StrongerDbContext>())
+            .AddScoped<IPasswordService, PasswordService>();
 
         return services;
     }

@@ -12,8 +12,8 @@ public class Response
 
     public class ErrorModel
     {
-        int StatusCode { get; set; }
-        String Message { get; set; }
+        public int StatusCode { get; set; }
+        public String Message { get; set; }
 
         public ErrorModel()
         {

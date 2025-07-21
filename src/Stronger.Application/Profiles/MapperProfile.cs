@@ -9,7 +9,7 @@ internal class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        this.CreateMap<CreateNewUserCommand, UserEntity>()
-            .ForMember(e => e.PasswordHash, opt => opt.MapFrom(cmd => cmd.Password));
+        // User
+        this.CreateMap<CreateNewUserCommand, UserEntity>();
     }
 }

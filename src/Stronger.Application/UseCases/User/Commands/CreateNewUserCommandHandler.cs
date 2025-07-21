@@ -8,7 +8,11 @@ using Stronger.Domain.Responses;
 
 namespace Stronger.Application.UseCases.User.Commands;
 
-public class CreateNewUserCommandHandler(IStrongerDbContext context, IMapper mapper) : IRequestHandler<CreateNewUserCommand, Response>
+public class CreateNewUserCommandHandler(
+    IStrongerDbContext context,
+    IMapper mapper,
+    IPasswordService passwordService
+) : IRequestHandler<CreateNewUserCommand, Response>
 {
     async Task<Response> IRequestHandler<CreateNewUserCommand, Response>.Handle(CreateNewUserCommand request, CancellationToken cancellationToken)
     {
@@ -16,18 +20,34 @@ public class CreateNewUserCommandHandler(IStrongerDbContext context, IMapper map
         UserEntity entity = mapper.Map<UserEntity>(request);
 
         UserEntity? temp = await context.Users.FirstOrDefaultAsync(u => u.Email == entity.Email, cancellationToken);
-
         if (temp is not null)
         {
             return new Response
             {
                 StatusCode = 409,
-                Content = new
+                Error = new Response.ErrorModel
                 {
-                    Message = "Email already in use."
+                    StatusCode = 409,
+                    Message = "Email already in use"
                 }
             };
-        } 
+        }
+
+        string password = request.Password;
+        if (!passwordService.Validate(password))
+        {
+            return new Response
+            {
+                StatusCode = 400,
+                Error = new Response.ErrorModel
+                {
+                    StatusCode = 400,
+                    Message = "Password does not meet security requirements"
+                }
+            };
+        }
+
+        entity.PasswordHash = passwordService.Hash(password);
         
 
         await context.Users.AddAsync(entity);
@@ -35,7 +55,11 @@ public class CreateNewUserCommandHandler(IStrongerDbContext context, IMapper map
 
         return new Response
         {
-            StatusCode = 204
+            StatusCode = 201,
+            Content = new
+            {
+                entity.Id
+            }
         };
     }
 }
