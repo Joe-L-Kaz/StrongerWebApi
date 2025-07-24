@@ -18,7 +18,7 @@ namespace Stronger.Api.Controllers
             return await this.SendAsync(cmd, cancellationToken);
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [ActionName("Authenticate")]
         [Route("[Action]")]
