@@ -1,0 +1,43 @@
+using System;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Stronger.Application.Abstractions.Repositories;
+using Stronger.Application.Common.Interfaces;
+using Stronger.Domain.Entities;
+
+namespace Stronger.Infrastructure.Persistence.Repositories;
+
+public class UserRepository : IUserRepository
+{
+    private readonly IStrongerDbContext _context;
+
+    public UserRepository(IStrongerDbContext context)
+    {
+        _context = context;
+    }
+
+    async Task IRepositoryBase<UserEntity>.AddAsync(UserEntity entity, CancellationToken cancellationToken)
+    {
+        await _context.Users.AddAsync(entity, cancellationToken);
+    }
+
+    void IRepositoryBase<UserEntity>.Delete(UserEntity entity)
+    {
+        _context.Users.Remove(entity);
+    }
+
+    async Task<IEnumerable<UserEntity>> IRepositoryBase<UserEntity>.GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Users.ToListAsync();
+    }
+
+    async Task<UserEntity?> IUserRepository.GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        return await _context.Users.FirstOrDefaultAsync(e => e.Email == email, cancellationToken);
+    }
+
+    async Task<UserEntity?> IRepositoryBase<UserEntity>.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Users.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+    }
+}

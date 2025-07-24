@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using MediatR.NotificationPublishers;
 using Microsoft.EntityFrameworkCore;
+using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
@@ -9,7 +10,8 @@ using Stronger.Domain.Responses;
 namespace Stronger.Application.UseCases.User.Commands;
 
 public class CreateNewUserCommandHandler(
-    IStrongerDbContext context,
+    //IStrongerDbContext context,
+    IRepositoryManager repository,
     IMapper mapper,
     IPasswordService passwordService
 ) : IRequestHandler<CreateNewUserCommand, Response>
@@ -19,7 +21,7 @@ public class CreateNewUserCommandHandler(
 #warning Dont forget to scramble details later
         UserEntity entity = mapper.Map<UserEntity>(request);
 
-        UserEntity? temp = await context.Users.FirstOrDefaultAsync(u => u.Email == entity.Email, cancellationToken);
+        UserEntity? temp = await repository.Users.GetByEmailAsync(entity.Email,cancellationToken);
         if (temp is not null)
         {
             return new Response
@@ -48,10 +50,10 @@ public class CreateNewUserCommandHandler(
         }
 
         entity.PasswordHash = passwordService.Hash(password);
-        
 
-        await context.Users.AddAsync(entity);
-        await context.SaveChangesAsync(cancellationToken);
+
+        await repository.Users.AddAsync(entity, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
 
         return new Response
         {
