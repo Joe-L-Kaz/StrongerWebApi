@@ -39,7 +39,7 @@ public class CreateNewUserCommandHandler(
         if (!passwordService.Validate(password))
         {
             return new Response
-            {
+            {   
                 StatusCode = 400,
                 Error = new Response.ErrorModel
                 {

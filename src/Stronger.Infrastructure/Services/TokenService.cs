@@ -9,7 +9,7 @@ using Stronger.Application.Common.Interfaces;
 
 namespace Stronger.Infrastructure.Services;
 
-public class TokenService : ITokenService
+internal sealed class TokenService : ITokenService
 {
     private IConfiguration _config;
     public TokenService(IConfiguration config)

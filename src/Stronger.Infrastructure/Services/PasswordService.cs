@@ -2,7 +2,7 @@ using Stronger.Application.Common.Interfaces;
 
 namespace Stronger.Infrastructure.Services;
 
-public class PasswordService : IPasswordService
+internal sealed class PasswordService : IPasswordService
 {
     string IPasswordService.Hash(String password)
     {
