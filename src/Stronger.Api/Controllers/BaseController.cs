@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
 using Stronger.Domain.Responses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stronger.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
     public abstract class BaseController(IMediator mediator) : ControllerBase
     {
         private protected async Task<IActionResult> SendAsync(IRequest<Response> request, CancellationToken cancellationToken)
