@@ -1,6 +1,5 @@
-using System;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;

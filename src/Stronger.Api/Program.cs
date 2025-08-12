@@ -1,8 +1,7 @@
-using System.Reflection;
 using System.Text;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Stronger.Api.Extensions;
 using Stronger.Application.UseCases;
 using Stronger.Infrastructure;
 
@@ -38,9 +37,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
-builder.Services
+        .AddApiLayer()
         .AddApplicationLayer()
         .AddInfrastructureLayer(builder.Configuration);
 
