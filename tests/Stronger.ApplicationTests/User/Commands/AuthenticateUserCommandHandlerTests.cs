@@ -16,6 +16,7 @@ public class AuthenticateUserCommandHandlerTests
     Mock<ITokenService> _tokenService;
     Mock<IPasswordService> _passwordService;
     IRequestHandler<AuthenticateUserCommand, Response> _handler;
+
     public AuthenticateUserCommandHandlerTests()
     {
         _context = new Mock<IStrongerDbContext>();
@@ -37,11 +38,11 @@ public class AuthenticateUserCommandHandlerTests
     }
 
     [TestMethod]
-    async Task TestHandle_Invalid()
+    public async Task TestHandle_Invalid()
     {
-        await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
-        {
-            await _handler.Handle(null!, CancellationToken.None);
-        });
+        Response response = await _handler.Handle(null!, CancellationToken.None);
+        Assert.AreEqual(400, response.StatusCode);
     }
+
+    
 }
