@@ -10,7 +10,6 @@ using Stronger.Domain.Responses;
 namespace Stronger.Application.UseCases.User.Commands;
 
 public class CreateNewUserCommandHandler(
-    //IStrongerDbContext context,
     IRepositoryManager repository,
     IMapper mapper,
     IPasswordService passwordService
