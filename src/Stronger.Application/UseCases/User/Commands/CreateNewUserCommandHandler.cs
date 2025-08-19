@@ -17,6 +17,19 @@ public class CreateNewUserCommandHandler(
 {
     async Task<Response> IRequestHandler<CreateNewUserCommand, Response>.Handle(CreateNewUserCommand request, CancellationToken cancellationToken)
     {
+        if (request is null)
+        {
+            return new Response
+            {
+                StatusCode = 400,
+                Error = new Response.ErrorModel
+                {
+                    StatusCode = 400,
+                    Message = "Request cannot be null"
+                }
+            };
+        }
+
 #warning Dont forget to scramble details later
         UserEntity entity = mapper.Map<UserEntity>(request);
 

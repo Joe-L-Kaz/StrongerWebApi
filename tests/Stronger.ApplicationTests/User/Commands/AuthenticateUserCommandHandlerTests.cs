@@ -1,6 +1,5 @@
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 using Moq;
 using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.Repositories;
@@ -9,7 +8,6 @@ using Stronger.Application.UseCases;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Responses;
 using Stronger.Domain.Entities;
-using Microsoft.VisualBasic;
 
 namespace Stronger.ApplicationTests.User.Commands;
 
