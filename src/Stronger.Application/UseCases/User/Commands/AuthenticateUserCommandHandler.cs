@@ -1,14 +1,13 @@
-using System;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
+using Stronger.Application.Abstractions.Repositories;
 
 namespace Stronger.Application.UseCases.User.Commands;
 
 public class AuthenticateUserCommandHandler(
-    IStrongerDbContext context,
+    IRepositoryManager repository,
     ITokenService tokenService,
     IPasswordService passwordService
 ) : IRequestHandler<AuthenticateUserCommand, Response>
@@ -27,7 +26,7 @@ public class AuthenticateUserCommandHandler(
                 }
             };
         }
-        UserEntity? user = await context.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
+        UserEntity? user = await repository.Users.GetByEmailAsync(request.Email, cancellationToken);
 
         if (user is null)
         {
