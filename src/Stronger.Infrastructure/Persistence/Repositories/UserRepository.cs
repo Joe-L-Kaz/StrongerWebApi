@@ -36,8 +36,8 @@ public class UserRepository : IUserRepository
         return await _context.Users.FirstOrDefaultAsync(e => e.Email == email, cancellationToken);
     }
 
-    async Task<UserEntity?> IRepositoryBase<UserEntity>.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    async Task<UserEntity?> IRepositoryBase<UserEntity>.GetByIdAsync(UserEntity entity, CancellationToken cancellationToken)
     {
-        return await _context.Users.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return await _context.Users.FirstOrDefaultAsync(e => e.Id == entity.Id, cancellationToken);
     }
 }

@@ -10,7 +10,8 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
     : DbContext(options), IStrongerDbContext
 {
     public DbSet<UserEntity> Users { get; set; } = null!;
-
+    public DbSet<ExerciseEntity> Exercises { get; set; } = null!;
+    
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         ChangeTracker.DetectChanges();
