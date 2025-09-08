@@ -42,7 +42,7 @@ public class CreateNewExerciseCommandHandler(
                 Error = new Response.ErrorModel
                 {
                     StatusCode = 409,
-                    Message = "This exercise already exists."
+                    Message = $"{request.Name} already exists."
                 }
             };
         }
