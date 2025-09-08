@@ -2,6 +2,7 @@ using System;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Stronger.Application.UseCases.Exercise;
+using Stronger.Application.UseCases.Exercise.Queries;
 using Stronger.Domain.Responses;
 
 namespace Stronger.Api.Controllers;
@@ -85,9 +86,9 @@ public class ExerciseController(IMediator mediator) : BaseController(mediator)
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync([FromQuery] long id, CancellationToken cancellationToken)
     {
-        return null!;
+        return await this.SendAsync(new RetrieveExerciseCommand(id), cancellationToken);
     }
 
     [HttpGet]
