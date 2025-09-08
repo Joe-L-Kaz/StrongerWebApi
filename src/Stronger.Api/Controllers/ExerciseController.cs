@@ -42,19 +42,33 @@ public class ExerciseController(IMediator mediator) : BaseController(mediator)
             responses.Add(response);
         }
 
-        bool someCreated = responses.Any(r => r.StatusCode == 201);
+        int total = cmds.Count;
+        int succeeded = responses.Count(r => r.StatusCode >= 200 && r.StatusCode < 300);
+        int failed = total - succeeded;
 
-        if (someCreated)
+        if (succeeded > 0)
         {
-            Response success = new Response
+            var failedItems = cmds
+                .Select((cmd, index) => new { cmd, index })
+                .Zip(responses, (c, r) => new
+                {
+                    c.index,
+                    name = c.cmd.Name,
+                    status = r.StatusCode,
+                    error = r.Error?.Message
+                })
+                .Where(x => x.status >= 400)
+                .ToList();
+
+            var content = new
             {
-                StatusCode = 201,
-                Content = responses.Select(r => r.StatusCode >= 400)
+                summary = new { total, succeeded, failed },
+                message = failed > 0 ? $"{failed} failed to save" : "All items created",
+                failedItems
             };
 
-            return StatusCode(success.StatusCode,
-                success.Content
-            );
+            var statusCode = succeeded == total ? StatusCodes.Status201Created : StatusCodes.Status200OK;
+            return StatusCode(statusCode, content);
         }
 
         Response fail = new Response
