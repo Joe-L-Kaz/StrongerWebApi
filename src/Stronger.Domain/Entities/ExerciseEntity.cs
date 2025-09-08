@@ -5,7 +5,8 @@ namespace Stronger.Domain.Entities;
 
 public class ExerciseEntity : EntityBase<long>
 {
-    public String ExerciseName { get; set; }
+    public String Name { get; set; }
+    public String NameNormalized { get; set; }
     public String Description { get; set; }
     public String? ImagePath { get; set; }
     public MuscleGroup PrimaryMuscleGroup { get; set; }
@@ -15,7 +16,8 @@ public class ExerciseEntity : EntityBase<long>
 
     public ExerciseEntity()
     {
-        ExerciseName = String.Empty;
+        Name = String.Empty;
+        NameNormalized = String.Empty;
         Description = String.Empty;
     }
 }

@@ -21,7 +21,7 @@ namespace Stronger.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ActionName("Authenticate")]
-        [Route("[Action]")]
+        [Route("/api/[controller]/[action]")]
         public async Task<IActionResult> AuthenticateAsync(AuthenticateUserCommand cmd, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(cmd);

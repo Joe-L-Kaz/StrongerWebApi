@@ -1,7 +1,7 @@
 * In Api Project *
 
-dotnet ef migrations add [migration name]  --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj
+dotnet ef migrations add [migration name] --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj
 
-dotnet ef database update [previous migration (Optional)]  --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj
+dotnet ef database update [previous migration (Optional)] --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj
 
-dotnet ef migrations remove  --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj
+dotnet ef migrations remove --project ../Stronger.Infrastructure/Stronger.Infrastructure.csproj

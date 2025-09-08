@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
@@ -16,6 +17,11 @@ public class ExerciseRepository : IExerciseRepository
     async Task IRepositoryBase<ExerciseEntity>.AddAsync(ExerciseEntity entity, CancellationToken cancellationToken)
     {
         await _context.Exercises.AddAsync(entity, cancellationToken);
+    }
+
+    async Task<bool> IExerciseRepository.AnyAsync(String nameNormalized, CancellationToken cancellationToken)
+    {
+        return await _context.Exercises.AnyAsync(e => e.NameNormalized == nameNormalized, cancellationToken);
     }
 
     void IRepositoryBase<ExerciseEntity>.Delete(ExerciseEntity entity)

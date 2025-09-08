@@ -2,8 +2,12 @@ namespace Stronger.Domain.Enums;
 
 public enum MuscleGroup
 {
-    Arms,
+    Bicep,
     Back,
+    Core,
     Chest,
-    Legs
+    Calves,
+    Glutes,
+    Quads,
+    Tricep,
 }

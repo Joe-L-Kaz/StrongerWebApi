@@ -21,6 +21,7 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<UserEntity>());
+        new ExerciseEntityTypeConfiguration().Configure(modelBuilder.Entity<ExerciseEntity>());
         base.OnModelCreating(modelBuilder);
     }
 }
