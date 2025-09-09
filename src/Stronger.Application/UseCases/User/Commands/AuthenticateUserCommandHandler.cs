@@ -3,6 +3,7 @@ using Stronger.Application.Common.Interfaces;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
 using Stronger.Application.Abstractions.Repositories;
+using Stronger.Application.Responses.User;
 
 namespace Stronger.Application.UseCases.User.Commands;
 
@@ -10,16 +11,16 @@ public class AuthenticateUserCommandHandler(
     IRepositoryManager repository,
     ITokenService tokenService,
     IPasswordService passwordService
-) : IRequestHandler<AuthenticateUserCommand, Response>
+) : IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>>
 {
-    async Task<Response> IRequestHandler<AuthenticateUserCommand, Response>.Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
+    async Task<Response<AuthenticateUserResponse>> IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>>.Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
         if (request is null)
         {
-            return new Response
+            return new Response<AuthenticateUserResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<AuthenticateUserResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Request cannot be null"
@@ -30,10 +31,10 @@ public class AuthenticateUserCommandHandler(
 
         if (user is null)
         {
-            return new Response
+            return new Response<AuthenticateUserResponse>
             {
                 StatusCode = 401,
-                Error = new Response.ErrorModel
+                Error = new Response<AuthenticateUserResponse>.ErrorModel
                 {
                     StatusCode = 401,
                     Message = "Invalid email or password."
@@ -45,10 +46,10 @@ public class AuthenticateUserCommandHandler(
 
         if (!validPassword)
         {
-            return new Response
+            return new Response<AuthenticateUserResponse>
             {
                 StatusCode = 401,
-                Error = new Response.ErrorModel
+                Error = new Response<AuthenticateUserResponse>.ErrorModel
                 {
                     StatusCode = 401,
                     Message = "Invalid email or password."
@@ -60,12 +61,12 @@ public class AuthenticateUserCommandHandler(
             user.Id, user.Forename, user.Surname, user.Dob, user.Email
         );
 
-        return new Response
+        return new Response<AuthenticateUserResponse>
         {
             StatusCode = 200,
-            Content = new
+            Content = new AuthenticateUserResponse
             {
-                accessToken
+                AccessToken = accessToken
             }
         };
     }

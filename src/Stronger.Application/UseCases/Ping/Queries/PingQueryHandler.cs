@@ -1,18 +1,17 @@
-using System;
-
 using MediatR;
+using Stronger.Application.Responses.Ping;
 using Stronger.Domain.Responses;
 
 namespace Stronger.Application.UseCases.Ping.Queries;
 
-public class PingQueryHandler : IRequestHandler<PingQuery, Response>
+public class PingQueryHandler : IRequestHandler<PingQuery, Response<PingResponse>>
 {
-    async Task<Response> IRequestHandler<PingQuery, Response>.Handle(PingQuery request, CancellationToken cancellationToken)
+    async Task<Response<PingResponse>> IRequestHandler<PingQuery, Response<PingResponse>>.Handle(PingQuery request, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(new Response
+        return await Task.FromResult(new Response<PingResponse>
         {
             StatusCode = 200,
-            Content = new
+            Content = new PingResponse
             {
                 Message = "Pong"
             }

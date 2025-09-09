@@ -4,6 +4,7 @@ using MediatR.NotificationPublishers;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
+using Stronger.Application.Responses.User;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
 
@@ -13,16 +14,16 @@ public class CreateNewUserCommandHandler(
     IRepositoryManager repository,
     IMapper mapper,
     IPasswordService passwordService
-) : IRequestHandler<CreateNewUserCommand, Response>
+) : IRequestHandler<CreateNewUserCommand, Response<CreateNewUserResponse>>
 {
-    async Task<Response> IRequestHandler<CreateNewUserCommand, Response>.Handle(CreateNewUserCommand request, CancellationToken cancellationToken)
+    async Task<Response<CreateNewUserResponse>> IRequestHandler<CreateNewUserCommand, Response<CreateNewUserResponse>>.Handle(CreateNewUserCommand request, CancellationToken cancellationToken)
     {
         if (request is null)
         {
-            return new Response
+            return new Response<CreateNewUserResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateNewUserResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Request cannot be null"
@@ -36,10 +37,10 @@ public class CreateNewUserCommandHandler(
         UserEntity? temp = await repository.Users.GetByEmailAsync(entity.Email,cancellationToken);
         if (temp is not null)
         {
-            return new Response
+            return new Response<CreateNewUserResponse>
             {
                 StatusCode = 409,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateNewUserResponse>.ErrorModel
                 {
                     StatusCode = 409,
                     Message = "Email already in use"
@@ -50,10 +51,10 @@ public class CreateNewUserCommandHandler(
         string password = request.Password;
         if (!passwordService.Validate(password))
         {
-            return new Response
+            return new Response<CreateNewUserResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateNewUserResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Password does not meet security requirements"
@@ -67,12 +68,12 @@ public class CreateNewUserCommandHandler(
         await repository.Users.AddAsync(entity, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 
-        return new Response
+        return new Response<CreateNewUserResponse>
         {
             StatusCode = 201,
-            Content = new
+            Content = new CreateNewUserResponse
             {
-                entity.Id
+                Id = entity.Id
             }
         };
     }

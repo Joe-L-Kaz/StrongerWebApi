@@ -2,11 +2,11 @@ using System;
 
 namespace Stronger.Domain.Responses;
 
-public class Response
+public class Response<T> where T : class
 {
     public int StatusCode { get; set; }
 
-    public dynamic? Content { get; set; }
+    public T? Content { get; set; }
 
     public ErrorModel? Error { get; set; }
 

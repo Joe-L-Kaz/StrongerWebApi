@@ -1,4 +1,5 @@
 using MediatR;
+using Stronger.Application.Responses.Exercise;
 using Stronger.Domain.Enums;
 using Stronger.Domain.Responses;
 
@@ -12,4 +13,4 @@ public record CreateExerciseCommand(
     MuscleGroup? SecondaryMuscleGroup,
     ExerciseType ExerciseType,
     ForceType ForceType
-) : IRequest<Response>;
+) : IRequest<Response<CreateExerciseResponse>>;
