@@ -1,6 +1,7 @@
 using System;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Stronger.Application.Responses.Exercise;
 using Stronger.Application.UseCases.Exercise;
 using Stronger.Application.UseCases.Exercise.Queries;
 using Stronger.Domain.Responses;
@@ -19,7 +20,7 @@ public class ExerciseController : BaseController
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateExerciseCommand cmd, CancellationToken cancellationToken)
     {
-        Response response = await _mediator.Send(cmd, cancellationToken);
+        Response<CreateExerciseResponse> response = await _mediator.Send(cmd, cancellationToken);
         
         if (response.Content is not null)
         {
@@ -37,10 +38,10 @@ public class ExerciseController : BaseController
     {
         if (cmds is null || cmds.Count == 0)
         {
-            Response response = new Response
+            Response<CreateExerciseResponse> response = new Response<CreateExerciseResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateExerciseResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Request cannot be null"
@@ -50,11 +51,11 @@ public class ExerciseController : BaseController
             return StatusCode(400, response);
         }
 
-        List<Response> responses = new List<Response>();
+        List<Response<CreateExerciseResponse>> responses = new List<Response<CreateExerciseResponse>>();
 
         foreach (var cmd in cmds)
         {
-            Response response = await _mediator.Send(cmd, cancellationToken);
+            Response<CreateExerciseResponse> response = await _mediator.Send(cmd, cancellationToken);
             responses.Add(response);
         }
 
@@ -87,10 +88,10 @@ public class ExerciseController : BaseController
             return StatusCode(statusCode, content);
         }
 
-        Response fail = new Response
+        Response<CreateExerciseResponse> fail = new Response<CreateExerciseResponse>
         {
             StatusCode = 400,
-            Error = new Response.ErrorModel
+            Error = new Response<CreateExerciseResponse>.ErrorModel
             {
                 StatusCode = 400,
                 Message = "None of the exercises could be created"

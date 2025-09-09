@@ -2,24 +2,25 @@ using System;
 using AutoMapper;
 using MediatR;
 using Stronger.Application.Abstractions.Repositories;
+using Stronger.Application.Responses.Exercise;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
 
 namespace Stronger.Application.UseCases.Exercise;
 
-public class CreateNewExerciseCommandHandler(
+public class CreateExerciseCommandHandler(
     IRepositoryManager _repo,
     IMapper _mapper
-): IRequestHandler<CreateExerciseCommand, Response>
+): IRequestHandler<CreateExerciseCommand, Response<CreateExerciseResponse>>
 {
-    async Task<Response> IRequestHandler<CreateExerciseCommand, Response>.Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
+    async Task<Response<CreateExerciseResponse>> IRequestHandler<CreateExerciseCommand, Response<CreateExerciseResponse>>.Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
     {
         if (request is null)
         {
-            return new Response
+            return new Response<CreateExerciseResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateExerciseResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Request cannot be null"
@@ -36,10 +37,10 @@ public class CreateNewExerciseCommandHandler(
 
         if (exists)
         {
-            return new Response
+            return new Response<CreateExerciseResponse>
             {
                 StatusCode = 409,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateExerciseResponse>.ErrorModel
                 {
                     StatusCode = 409,
                     Message = $"{request.Name} already exists."
@@ -58,10 +59,10 @@ public class CreateNewExerciseCommandHandler(
         }
         catch (Exception)
         {
-            return new Response
+            return new Response<CreateExerciseResponse>
             {
                 StatusCode = 400,
-                Error = new Response.ErrorModel
+                Error = new Response<CreateExerciseResponse>.ErrorModel
                 {
                     StatusCode = 400,
                     Message = "Could not save exercise try again later."
@@ -69,12 +70,12 @@ public class CreateNewExerciseCommandHandler(
             };
         }
 
-        return new Response
+        return new Response<CreateExerciseResponse>
         {
             StatusCode = 201,
-            Content = new
+            Content = new CreateExerciseResponse
             {
-                exercise.Id
+                Id = exercise.Id
             }
         };
     }
