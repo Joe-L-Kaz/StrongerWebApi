@@ -16,17 +16,17 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    async Task IRepositoryBase<UserEntity>.AddAsync(UserEntity entity, CancellationToken cancellationToken)
+    async Task IRepositoryBase<UserEntity, Guid>.AddAsync(UserEntity entity, CancellationToken cancellationToken)
     {
         await _context.Users.AddAsync(entity, cancellationToken);
     }
 
-    void IRepositoryBase<UserEntity>.Delete(UserEntity entity)
+    void IRepositoryBase<UserEntity, Guid>.Delete(UserEntity entity)
     {
         _context.Users.Remove(entity);
     }
 
-    async Task<IEnumerable<UserEntity>> IRepositoryBase<UserEntity>.GetAllAsync(CancellationToken cancellationToken)
+    async Task<IEnumerable<UserEntity>> IRepositoryBase<UserEntity, Guid>.GetAllAsync(CancellationToken cancellationToken)
     {
         return await _context.Users.ToListAsync();
     }
@@ -36,8 +36,8 @@ public class UserRepository : IUserRepository
         return await _context.Users.FirstOrDefaultAsync(e => e.Email == email, cancellationToken);
     }
 
-    async Task<UserEntity?> IRepositoryBase<UserEntity>.GetByIdAsync(UserEntity entity, CancellationToken cancellationToken)
+    async Task<UserEntity?> IRepositoryBase<UserEntity, Guid>.GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Users.FirstOrDefaultAsync(e => e.Id == entity.Id, cancellationToken);
+        return await _context.Users.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 }

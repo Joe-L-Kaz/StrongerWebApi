@@ -74,7 +74,7 @@ public class CreateNewExerciseCommandHandler(
             StatusCode = 201,
             Content = new
             {
-                Id = exercise.Id
+                exercise.Id
             }
         };
     }

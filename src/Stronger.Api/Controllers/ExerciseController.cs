@@ -7,12 +7,27 @@ using Stronger.Domain.Responses;
 
 namespace Stronger.Api.Controllers;
 
-public class ExerciseController(IMediator mediator) : BaseController(mediator)
+public class ExerciseController : BaseController
 {
+    private readonly IMediator _mediator;
+
+    public ExerciseController(IMediator mediator) : base(mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateExerciseCommand cmd, CancellationToken cancellationToken)
     {
-        return await this.SendAsync(cmd, cancellationToken);
+        Response response = await _mediator.Send(cmd, cancellationToken);
+        
+        if (response.Content is not null)
+        {
+            //string location = this.Url.Link("RetrieveAsync", new { id })!;
+            //this.Response.Headers.Location = location;
+        }
+
+        return StatusCode(response.StatusCode, response);
     }
 
     [HttpPost]
@@ -39,7 +54,7 @@ public class ExerciseController(IMediator mediator) : BaseController(mediator)
 
         foreach (var cmd in cmds)
         {
-            Response response = await mediator.Send(cmd, cancellationToken);
+            Response response = await _mediator.Send(cmd, cancellationToken);
             responses.Add(response);
         }
 
@@ -82,11 +97,11 @@ public class ExerciseController(IMediator mediator) : BaseController(mediator)
             }
         };
 
-        return StatusCode(fail.StatusCode, fail.Error);
+        return StatusCode(fail.StatusCode, fail);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAsync([FromQuery] long id, CancellationToken cancellationToken)
+    public async Task<IActionResult> RetrieveAsync([FromQuery] long id, CancellationToken cancellationToken)
     {
         return await this.SendAsync(new RetrieveExerciseCommand(id), cancellationToken);
     }

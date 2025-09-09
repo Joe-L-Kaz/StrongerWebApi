@@ -14,7 +14,7 @@ public class ExerciseRepository : IExerciseRepository
     {
         _context = context;
     }
-    async Task IRepositoryBase<ExerciseEntity>.AddAsync(ExerciseEntity entity, CancellationToken cancellationToken)
+    async Task IRepositoryBase<ExerciseEntity, long>.AddAsync(ExerciseEntity entity, CancellationToken cancellationToken)
     {
         await _context.Exercises.AddAsync(entity, cancellationToken);
     }
@@ -24,18 +24,18 @@ public class ExerciseRepository : IExerciseRepository
         return await _context.Exercises.AnyAsync(e => e.NameNormalized == nameNormalized, cancellationToken);
     }
 
-    void IRepositoryBase<ExerciseEntity>.Delete(ExerciseEntity entity)
+    void IRepositoryBase<ExerciseEntity, long>.Delete(ExerciseEntity entity)
     {
         _context.Exercises.Remove(entity);
     }
 
-    async Task<IEnumerable<ExerciseEntity>> IRepositoryBase<ExerciseEntity>.GetAllAsync(CancellationToken cancellationToken)
+    async Task<IEnumerable<ExerciseEntity>> IRepositoryBase<ExerciseEntity, long>.GetAllAsync(CancellationToken cancellationToken)
     {
         return await _context.Exercises.ToListAsync(cancellationToken);
     }
 
-    async Task<ExerciseEntity?> IRepositoryBase<ExerciseEntity>.GetByIdAsync(ExerciseEntity entity, CancellationToken cancellationToken)
+    async Task<ExerciseEntity?> IRepositoryBase<ExerciseEntity, long>.GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        return await _context.Exercises.FirstOrDefaultAsync(e => e.Id == entity.Id, cancellationToken);
+        return await _context.Exercises.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 }

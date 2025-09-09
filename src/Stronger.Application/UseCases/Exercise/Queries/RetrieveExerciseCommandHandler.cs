@@ -14,7 +14,7 @@ public class RetrieveExerciseCommandHandler(
     {
         if (request is null)
         {
-            new Response
+            return new Response
             {
                 StatusCode = 400,
                 Error = new Response.ErrorModel
@@ -25,7 +25,25 @@ public class RetrieveExerciseCommandHandler(
             };
         }
 
-        ExerciseEntity? exercise = await _repo.Exercises.GetByIdAsync(request.Id)
+        ExerciseEntity? exercise = await _repo.Exercises.GetByIdAsync(request.Id, cancellationToken);
+
+        if (exercise is null)
+        {
+            return new Response
+            {
+                StatusCode = 404,
+                Error = new Response.ErrorModel
+                {
+                    Message = $"Exercise with Id: {request.Id} not found"
+                }
+            };
+        }
+
+        return new Response
+        {
+            StatusCode = 200,
+            Content = exercise
+        };
 
     }
 }

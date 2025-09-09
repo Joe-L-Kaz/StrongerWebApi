@@ -3,10 +3,12 @@ using Stronger.Domain.Entities;
 
 namespace Stronger.Application.Abstractions.Repositories;
 
-public interface IRepositoryBase<T> where T : class
+public interface IRepositoryBase<TEntity, TKey>
+where TEntity : class
+where TKey : struct
 {
-    public Task AddAsync(T entity, CancellationToken cancellationToken);
-    public void Delete(T entity);
-    public Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
-    public Task<T?> GetByIdAsync(T entity, CancellationToken cancellationToken);
+    public Task AddAsync(TEntity entity, CancellationToken cancellationToken);
+    public void Delete(TEntity entity);
+    public Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
+    public Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken);
 }
