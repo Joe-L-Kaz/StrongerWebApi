@@ -21,9 +21,10 @@ public class ExerciseController : BaseController
     public async Task<IActionResult> CreateAsync([FromBody] CreateExerciseCommand cmd, CancellationToken cancellationToken)
     {
         Response<CreateExerciseResponse> response = await _mediator.Send(cmd, cancellationToken);
-        
+
         if (response.Content is not null)
         {
+            // this does not work yet
             //string location = this.Url.Link("RetrieveAsync", new { id })!;
             //this.Response.Headers.Location = location;
         }
