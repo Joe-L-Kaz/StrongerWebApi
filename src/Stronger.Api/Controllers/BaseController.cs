@@ -12,15 +12,20 @@ namespace Stronger.Api.Controllers
     [Authorize]
     public abstract class BaseController(IMediator _mediator) : ControllerBase
     {
-        private protected async Task<IActionResult> SendAsync(IRequest<Response> request, CancellationToken cancellationToken)
+        private protected async Task<IActionResult> SendAsync<T>(
+            IRequest<Response<T>> request,
+            CancellationToken cancellationToken
+        ) where T : class
         {
-            Response response = await _mediator.Send(request, cancellationToken);
+            Response<T> response = await _mediator.Send(request, cancellationToken);
 
-            Object? val = response.Content ?? response.Error;
+            if (response.Content is not null)
+                return StatusCode(response.StatusCode, response.Content);
 
-            return val is null
-                ? this.StatusCode(response.StatusCode)
-                : this.StatusCode(response.StatusCode, val);
+            if (response.Error is not null)
+                return StatusCode(response.StatusCode, response.Error);
+
+            return StatusCode(response.StatusCode);
         }
     }
 }
