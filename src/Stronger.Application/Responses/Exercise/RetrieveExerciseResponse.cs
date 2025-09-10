@@ -6,7 +6,6 @@ namespace Stronger.Application.Responses.Exercise;
 public class RetrieveExerciseResponse : ExerciseResponseBase
 {
     public String Name { get; set; }
-    public String NameNormalized { get; set; }
     public String Description { get; set; }
     public String? ImagePath { get; set; }
     public MuscleGroup PrimaryMuscleGroup { get; set; }
@@ -17,7 +16,6 @@ public class RetrieveExerciseResponse : ExerciseResponseBase
     public RetrieveExerciseResponse()
     {
         Name = String.Empty;
-        NameNormalized = String.Empty;
         Description = String.Empty;
     }
 }

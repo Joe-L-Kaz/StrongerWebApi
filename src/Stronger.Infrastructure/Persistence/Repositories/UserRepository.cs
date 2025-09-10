@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
@@ -26,9 +25,11 @@ public class UserRepository : IUserRepository
         _context.Users.Remove(entity);
     }
 
-    async Task<IEnumerable<UserEntity>> IRepositoryBase<UserEntity, Guid>.GetAllAsync(CancellationToken cancellationToken)
+    async Task<IEnumerable<UserEntity>> IRepositoryBase<UserEntity, Guid>.ListAsync(Expression<Func<UserEntity, bool>>? predicate,CancellationToken cancellationToken)
     {
-        return await _context.Users.ToListAsync();
+        return predicate is null
+            ? await _context.Users.ToListAsync(cancellationToken)
+            : await _context.Users.Where(predicate).ToListAsync(cancellationToken);
     }
 
     async Task<UserEntity?> IUserRepository.GetByEmailAsync(string email, CancellationToken cancellationToken)

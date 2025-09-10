@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using Stronger.Application.Responses.Exercise;
 using Stronger.Application.UseCases.Exercise;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Entities;
@@ -15,5 +16,6 @@ internal class MapperProfile : Profile
 
         // Exercise
         this.CreateMap<CreateExerciseCommand, ExerciseEntity>();
+        this.CreateMap<ExerciseEntity, RetrieveExerciseResponse>();
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Stronger.Application.Abstractions.Repositories;
@@ -29,9 +30,11 @@ public class ExerciseRepository : IExerciseRepository
         _context.Exercises.Remove(entity);
     }
 
-    async Task<IEnumerable<ExerciseEntity>> IRepositoryBase<ExerciseEntity, long>.GetAllAsync(CancellationToken cancellationToken)
+    async Task<IEnumerable<ExerciseEntity>> IRepositoryBase<ExerciseEntity, long>.ListAsync(Expression<Func<ExerciseEntity, bool>>? predicate, CancellationToken cancellationToken)
     {
-        return await _context.Exercises.ToListAsync(cancellationToken);
+        return predicate is null
+            ? await _context.Exercises.ToListAsync(cancellationToken)
+            : await _context.Exercises.Where(predicate).ToListAsync(cancellationToken);
     }
 
     async Task<ExerciseEntity?> IRepositoryBase<ExerciseEntity, long>.GetByIdAsync(long id, CancellationToken cancellationToken)

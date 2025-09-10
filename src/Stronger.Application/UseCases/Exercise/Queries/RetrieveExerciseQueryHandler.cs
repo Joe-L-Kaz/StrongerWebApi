@@ -9,9 +9,9 @@ namespace Stronger.Application.UseCases.Exercise.Queries;
 
 public class RetrieveExerciseCommandHandler(
     IRepositoryManager _repo
-) : IRequestHandler<RetrieveExerciseCommand, Response<RetrieveExerciseResponse>>
+) : IRequestHandler<RetrieveExerciseQuery, Response<RetrieveExerciseResponse>>
 {
-    async Task<Response<RetrieveExerciseResponse>> IRequestHandler<RetrieveExerciseCommand, Response<RetrieveExerciseResponse>>.Handle(RetrieveExerciseCommand request, CancellationToken cancellationToken)
+    async Task<Response<RetrieveExerciseResponse>> IRequestHandler<RetrieveExerciseQuery, Response<RetrieveExerciseResponse>>.Handle(RetrieveExerciseQuery request, CancellationToken cancellationToken)
     {
         if (request is null)
         {
