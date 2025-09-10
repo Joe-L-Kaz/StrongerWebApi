@@ -22,14 +22,12 @@ public class ExerciseController : BaseController
     {
         Response<CreateExerciseResponse> response = await _mediator.Send(cmd, cancellationToken);
 
-        if (response.Content is not null)
+        if (response.Content is null)
         {
-            // this does not work yet
-            //string location = this.Url.Link("RetrieveAsync", new { id })!;
-            //this.Response.Headers.Location = location;
+            return StatusCode(response.StatusCode, response.Error);
         }
 
-        return StatusCode(response.StatusCode, response);
+        return CreatedAtAction("Retrieve", new { Id = response.Content.Id }, response.Content);
     }
 
     [HttpPost]
@@ -103,6 +101,7 @@ public class ExerciseController : BaseController
     }
 
     [HttpGet]
+    [ActionName("Retrieve")]
     public async Task<IActionResult> RetrieveAsync([FromQuery] long id, CancellationToken cancellationToken)
     {
         return await this.SendAsync(new RetrieveExerciseCommand(id), cancellationToken);
