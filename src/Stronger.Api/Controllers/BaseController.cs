@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace Stronger.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     [Authorize]
+    [Route("api/[controller]")]
     public abstract class BaseController(IMediator _mediator) : ControllerBase
     {
         private protected async Task<IActionResult> SendAsync<T>(

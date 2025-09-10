@@ -18,6 +18,7 @@ public class ExerciseController : BaseController
     }
 
     [HttpPost]
+    [ActionName("Create")]
     public async Task<IActionResult> CreateAsync([FromBody] CreateExerciseCommand cmd, CancellationToken cancellationToken)
     {
         Response<CreateExerciseResponse> response = await _mediator.Send(cmd, cancellationToken);
