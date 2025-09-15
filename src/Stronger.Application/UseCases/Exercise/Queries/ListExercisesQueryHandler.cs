@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using MediatR;
 using Stronger.Application.Abstractions.Repositories;

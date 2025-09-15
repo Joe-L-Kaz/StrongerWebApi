@@ -57,15 +57,15 @@ public class CreateExerciseCommandHandler(
         {
             await _repo.SaveChangesAsync(cancellationToken);
         }
-        catch (Exception)
+        catch (Exception e)
         {
             return new Response<CreateExerciseResponse>
             {
-                StatusCode = 400,
+                StatusCode = 500,
                 Error = new Response<CreateExerciseResponse>.ErrorModel
                 {
-                    StatusCode = 400,
-                    Message = "Could not save exercise try again later."
+                    StatusCode = 500,
+                    Message = e.Message
                 }
             };
         }
