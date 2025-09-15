@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Stronger.Application\Stronger.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot/images/.DS_Store" />
+  </ItemGroup>
+
 </Project>
