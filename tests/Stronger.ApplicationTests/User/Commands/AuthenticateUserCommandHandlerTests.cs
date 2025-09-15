@@ -8,6 +8,7 @@ using Stronger.Application.UseCases;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Responses;
 using Stronger.Domain.Entities;
+using Stronger.Application.Responses.User;
 
 namespace Stronger.ApplicationTests.User.Commands;
 
@@ -17,7 +18,7 @@ public class AuthenticateUserCommandHandlerTests
     Mock<IRepositoryManager> _repo;
     Mock<ITokenService> _tokenService;
     Mock<IPasswordService> _passwordService;
-    IRequestHandler<AuthenticateUserCommand, Response> _handler;
+    IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>> _handler;
 
     public AuthenticateUserCommandHandlerTests()
     {
@@ -36,14 +37,14 @@ public class AuthenticateUserCommandHandlerTests
 
         var provider = services.BuildServiceProvider();
 
-        _handler = provider.GetRequiredService<IRequestHandler<AuthenticateUserCommand, Response>>();
+        _handler = provider.GetRequiredService<IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>>>();
     }
 
     [TestMethod]
     public async Task TestHandle_RequestNull_Returns400()
     {
         //Act
-        Response response = await _handler.Handle(null!, CancellationToken.None);
+        Response<AuthenticateUserResponse> response = await _handler.Handle(null!, CancellationToken.None);
 
         //Assert
         Assert.AreEqual(400, response.StatusCode);
@@ -72,7 +73,7 @@ public class AuthenticateUserCommandHandlerTests
             });
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<AuthenticateUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(401, response.StatusCode);
@@ -105,7 +106,7 @@ public class AuthenticateUserCommandHandlerTests
             .Returns(false);
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<AuthenticateUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(401, response.StatusCode);
@@ -148,7 +149,7 @@ public class AuthenticateUserCommandHandlerTests
             .Returns(String.Empty);
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<AuthenticateUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(200, response.StatusCode);
