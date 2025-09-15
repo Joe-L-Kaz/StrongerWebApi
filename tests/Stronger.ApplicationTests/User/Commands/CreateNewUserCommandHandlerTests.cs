@@ -6,6 +6,7 @@ using Moq;
 using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
+using Stronger.Application.Responses.User;
 using Stronger.Application.UseCases;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Entities;
@@ -19,7 +20,7 @@ public class CreateNewUserCommandHandlerTests
     Mock<IRepositoryManager> _repo;
     Mock<IPasswordService> _passwordService;
     Mock<IMapper> _mapper;
-    IRequestHandler<CreateNewUserCommand, Response> _handler;
+    IRequestHandler<CreateNewUserCommand, Response<CreateNewUserResponse>> _handler;
 
     public CreateNewUserCommandHandlerTests()
     {
@@ -38,14 +39,14 @@ public class CreateNewUserCommandHandlerTests
 
         var provider = services.BuildServiceProvider();
 
-        _handler = provider.GetRequiredService<IRequestHandler<CreateNewUserCommand, Response>>();
+        _handler = provider.GetRequiredService<IRequestHandler<CreateNewUserCommand, Response<CreateNewUserResponse>>>();
     }
 
     [TestMethod]
     public async Task TestHandle_RequestNull_Returns400()
     {
         // Act
-        Response response = await _handler.Handle(null!, CancellationToken.None);
+        Response<CreateNewUserResponse> response = await _handler.Handle(null!, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(400, response.StatusCode);
@@ -82,7 +83,7 @@ public class CreateNewUserCommandHandlerTests
             });
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<CreateNewUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(409, response.StatusCode);
@@ -123,7 +124,7 @@ public class CreateNewUserCommandHandlerTests
             .Returns(false);
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<CreateNewUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(400, response.StatusCode);
@@ -164,7 +165,7 @@ public class CreateNewUserCommandHandlerTests
             .Returns(true);
 
         // Act
-        Response response = await _handler.Handle(cmd, CancellationToken.None);
+        Response<CreateNewUserResponse> response = await _handler.Handle(cmd, CancellationToken.None);
 
         // Assert
         Assert.AreEqual(201, response.StatusCode);
