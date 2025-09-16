@@ -30,9 +30,7 @@ public class CreateWorkoutPlanCommandHandler(
             };
         }
 
-        List<long> associatedExercises = request.AssociatedExercises.ToList();
-
-        if (associatedExercises.Count == 0)
+        if (request.AssociatedExercises.Count == 0)
         {
             return new Response<CreateWorkoutPlanResponse>
             {
@@ -61,7 +59,7 @@ public class CreateWorkoutPlanCommandHandler(
             };
         }
 
-        foreach (long id in associatedExercises)
+        foreach (long id in request.AssociatedExercises)
         {
             List<ExerciseEntity> temp = exerciseEntities.Where(e => e.Id == id).ToList();
             if (temp.Count == 0)
@@ -103,7 +101,7 @@ public class CreateWorkoutPlanCommandHandler(
             };
         }
 
-        foreach (long exerciseId in associatedExercises)
+        foreach (long exerciseId in request.AssociatedExercises)
         {
             WorkoutPlanExerciseEntity temp = new WorkoutPlanExerciseEntity
             {

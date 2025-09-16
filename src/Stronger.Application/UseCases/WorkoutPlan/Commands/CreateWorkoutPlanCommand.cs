@@ -6,6 +6,6 @@ namespace Stronger.Application.UseCases.WorkoutPlan.Commands;
 
 public record CreateWorkoutPlanCommand(
     String Name,
-    IEnumerable<long> AssociatedExercises
+    List<long> AssociatedExercises
 ): IRequest<Response<CreateWorkoutPlanResponse>>;
 

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="UseCases/WorkoutPlan/Queries/" />
   </ItemGroup>
 
   <ItemGroup>
