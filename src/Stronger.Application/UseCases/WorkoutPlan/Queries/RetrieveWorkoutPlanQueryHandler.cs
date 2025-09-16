@@ -1,10 +1,8 @@
-using System;
 using AutoMapper;
 using MediatR;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Responses.Exercise;
 using Stronger.Application.Responses.WorkoutPlan;
-using Stronger.Application.UseCases.Exercise.Queries;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
 
@@ -103,6 +101,5 @@ public class RetrieveWorkoutPlanQueryHandler(
             StatusCode = 200,
             Content = response
         };
-        
     }
 }
