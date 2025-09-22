@@ -38,7 +38,7 @@ public class RetrieveWorkoutPlanQueryHandler(
                 Error = new Response<RetrieveWorkoutPlanResponse>.ErrorModel
                 {
                     StatusCode = 404,
-                    Message = "Workout dlan does not exists"
+                    Message = "Workout plan does not exists"
                 }
             };
         }
@@ -53,7 +53,7 @@ public class RetrieveWorkoutPlanQueryHandler(
                 Error = new Response<RetrieveWorkoutPlanResponse>.ErrorModel
                 {
                     StatusCode = 404,
-                    Message = "There are no exercise plans associated with this plan"
+                    Message = "There are no exercises associated with this plan"
                 }
             };
         }
