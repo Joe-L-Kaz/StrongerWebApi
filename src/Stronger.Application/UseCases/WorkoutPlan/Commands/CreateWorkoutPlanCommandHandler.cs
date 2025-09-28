@@ -81,25 +81,8 @@ public class CreateWorkoutPlanCommandHandler(
 
         WorkoutPlanEntity workoutPlan = mapper.Map<WorkoutPlanEntity>(request);
         workoutPlan.CustomerId = userId;
-
+        workoutPlan.Id = await repo.WorkoutPlans.GetNextIdAsync();
         await repo.WorkoutPlans.AddAsync(workoutPlan, cancellationToken);
-
-        try
-        {
-            await repo.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            return new Response<CreateWorkoutPlanResponse>
-            {
-                StatusCode = 500,
-                Error = new Response<CreateWorkoutPlanResponse>.ErrorModel
-                {
-                    StatusCode = 500,
-                    Message = e.Message
-                }
-            };
-        }
 
         foreach (long exerciseId in request.AssociatedExercises)
         {

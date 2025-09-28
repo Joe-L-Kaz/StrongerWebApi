@@ -30,6 +30,12 @@ public class WorkoutPlanRepository : IWorkoutPlanRepository
         return await _context.WorkoutPlans.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
+    async Task<long> IWorkoutPlanRepository.GetNextIdAsync()
+    {
+        var maxId = await _context.WorkoutPlans.MaxAsync(e => (long?)e.Id) ?? 0;
+        return maxId + 1;
+    }
+
     async Task<IEnumerable<WorkoutPlanEntity>> IRepositoryBase<WorkoutPlanEntity, long>.ListAsync(Expression<Func<WorkoutPlanEntity, bool>>? predicate, CancellationToken cancellationToken)
     {
         return predicate is null
