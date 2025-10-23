@@ -35,4 +35,15 @@ public class WorkoutPlanController : BaseController
     {
         return await this.SendAsync(query, cancellationToken);
     }
+
+    [HttpGet]
+    [ActionName("List")]
+    [Route("/api/[controller]/[action]")]
+    public async Task<IActionResult> ListAsync(CancellationToken cancellationToken)
+    {
+        return await this.SendAsync(
+            new ListWorkoutPlansQuery(),
+            cancellationToken
+        );
+    }
 }
