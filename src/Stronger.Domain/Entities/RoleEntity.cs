@@ -5,6 +5,6 @@ namespace Stronger.Domain.Entities;
 
 public class RoleEntity
 {
-    int Id { get; set; }
-    Role Role { get; set; }
+    public int Id { get; set; }
+    public Role Role { get; set; }
 }

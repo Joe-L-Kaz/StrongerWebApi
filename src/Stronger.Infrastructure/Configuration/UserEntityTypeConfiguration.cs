@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stronger.Domain.Entities;
+using Stronger.Domain.Enums;
 
 namespace Stronger.Infrastructure.Configuration;
 
@@ -47,5 +48,11 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserEntity>
         builder
             .Property(user => user.Dob)
             .HasColumnType("date");
+
+        builder
+            .HasOne<RoleEntity>()
+            .WithOne()
+            .HasForeignKey<UserEntity>(user => user.RoleId)
+            .IsRequired();
     }
 }
