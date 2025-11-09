@@ -57,8 +57,23 @@ public class AuthenticateUserCommandHandler(
             };
         }
 
+        RoleEntity? role = await repository.Roles.GetByIdAsync(user.RoleId, cancellationToken);
+
+        if (role is null)
+        {
+            return new Response<AuthenticateUserResponse>
+            {
+                StatusCode = 500,
+                Error = new Response<AuthenticateUserResponse>.ErrorModel
+                {
+                    StatusCode = 500,
+                    Message = "User does not have an assigned role."
+                }
+            };
+        }
+
         String accessToken = tokenService.GenerateToken(
-            user.Id, user.Forename, user.Surname, user.Dob, user.Email
+            user.Id, user.Forename, user.Surname, user.Dob, user.Email, role.Role
         );
 
         return new Response<AuthenticateUserResponse>

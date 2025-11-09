@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 
 using Stronger.Application.Common.Interfaces;
+using Stronger.Domain.Enums;
 
 namespace Stronger.Infrastructure.Services;
 
@@ -16,7 +17,7 @@ public class TokenService : ITokenService
     {
         _config = config;
     }
-    public String GenerateToken(Guid id, String forename, String surname, DateOnly dob, String email)
+    public String GenerateToken(Guid id, String forename, String surname, DateOnly dob, String email, Role role)
     {
         String issuer = _config["JwtConfig:Issuer"]!;
         String audience = _config["JwtConfig:Issuer"]!;
@@ -32,7 +33,8 @@ public class TokenService : ITokenService
                 new Claim(JwtRegisteredClaimNames.Name, forename),
                 new Claim(JwtRegisteredClaimNames.FamilyName, surname),
                 new Claim(JwtRegisteredClaimNames.Birthdate, dob.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, email)
+                new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim(ClaimTypes.Role, role.ToString())
             }),
             Expires = tokenExpiryTimeStamp,
             Issuer = issuer,
