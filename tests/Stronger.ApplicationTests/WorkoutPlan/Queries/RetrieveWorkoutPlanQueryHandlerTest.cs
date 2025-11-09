@@ -112,41 +112,4 @@ public class RetrieveWorkoutPlanQueryHandlerTest
         // Assert
         Assert.AreEqual(404, response.StatusCode);
     }
-
-    // [TestMethod]
-    // public async Task TestHandle_NoAssociatedExercises_Returns404()
-    // {
-    //     // Arrange
-    //     RetrieveWorkoutPlanQuery query = new(1);
-
-    //     _repo
-    //         .Setup(r => r.WorkoutPlans)
-    //         .Returns(() =>
-    //         {
-    //             Mock<IWorkoutPlanRepository> repo = new();
-    //             repo
-    //                 .Setup(r => r.GetByIdAsync(It.IsAny<long>(), CancellationToken.None))
-    //                 .ReturnsAsync(new WorkoutPlanEntity());
-
-    //             return repo.Object;
-    //         });
-
-    //     _repo
-    //         .Setup(r => r.WorkoutPlanExercises)
-    //         .Returns(() =>
-    //         {
-    //             Mock<IWorkoutPlanExerciseRepository> repo = new();
-    //             repo
-    //                 .Setup(r => r.ListAsync(It.IsAny<Expression<Func<WorkoutPlanExerciseEntity, bool>>?>(), CancellationToken.None))
-    //                 .ReturnsAsync(() => new List<WorkoutPlanExerciseEntity>());
-
-    //             return repo.Object;
-    //         });
-
-    //     // Act
-    //     Response<RetrieveWorkoutPlanResponse> response = await _handler.Handle(query, CancellationToken.None);
-
-    //     // Assert
-    //     Assert.AreEqual(404, response.StatusCode);
-    // }
 }
