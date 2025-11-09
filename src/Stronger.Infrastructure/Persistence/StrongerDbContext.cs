@@ -27,6 +27,7 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
         new ExerciseEntityTypeConfiguration().Configure(modelBuilder.Entity<ExerciseEntity>());
         new WorkoutPlanEntityTypeConfiguration().Configure(modelBuilder.Entity<WorkoutPlanEntity>());
         new WorkoutPlanExerciseEntityTypeConfiguration().Configure(modelBuilder.Entity<WorkoutPlanExerciseEntity>());
+        new RoleEntityTypeConfiguration().Configure(modelBuilder.Entity<RoleEntity>());
         base.OnModelCreating(modelBuilder);
     }
 }

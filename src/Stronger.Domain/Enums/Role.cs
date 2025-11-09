@@ -2,7 +2,7 @@ namespace Stronger.Domain.Enums;
 
 public enum Role
 {
-    User,
+    User = 1,
     PremiumUser,
     Admin
 }
