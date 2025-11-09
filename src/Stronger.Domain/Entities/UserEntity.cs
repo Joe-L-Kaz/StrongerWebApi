@@ -9,7 +9,7 @@ public class UserEntity : EntityBase<Guid>
     public DateOnly Dob { get; set; }
     public String Email { get; set; }
     public String PasswordHash { get; set; }
-
+    public long RoleId { get; set; }
     public UserEntity()
     {
         Forename = String.Empty;
