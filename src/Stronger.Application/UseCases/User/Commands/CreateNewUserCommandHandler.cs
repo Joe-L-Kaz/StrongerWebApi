@@ -33,6 +33,7 @@ public class CreateNewUserCommandHandler(
 
 #warning Dont forget to scramble details later
         UserEntity entity = mapper.Map<UserEntity>(request);
+        entity.RoleId = 1;
 
         UserEntity? temp = await repository.Users.GetByEmailAsync(entity.Email,cancellationToken);
         if (temp is not null)
@@ -63,7 +64,6 @@ public class CreateNewUserCommandHandler(
         }
 
         entity.PasswordHash = passwordService.Hash(password);
-
 
         await repository.Users.AddAsync(entity, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

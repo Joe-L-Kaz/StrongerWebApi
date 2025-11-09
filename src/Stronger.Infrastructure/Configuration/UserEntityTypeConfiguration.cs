@@ -51,8 +51,8 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserEntity>
 
         builder
             .HasOne<RoleEntity>()
-            .WithOne()
-            .HasForeignKey<UserEntity>(user => user.RoleId)
+            .WithMany()
+            .HasForeignKey(user => user.RoleId)
             .IsRequired();
     }
 }

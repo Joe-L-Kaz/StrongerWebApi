@@ -79,8 +79,9 @@ namespace Stronger.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -126,8 +127,7 @@ namespace Stronger.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("RoleId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -176,8 +176,8 @@ namespace Stronger.Infrastructure.Migrations
             modelBuilder.Entity("Stronger.Domain.Entities.UserEntity", b =>
                 {
                     b.HasOne("Stronger.Domain.Entities.RoleEntity", null)
-                        .WithOne()
-                        .HasForeignKey("Stronger.Domain.Entities.UserEntity", "RoleId")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

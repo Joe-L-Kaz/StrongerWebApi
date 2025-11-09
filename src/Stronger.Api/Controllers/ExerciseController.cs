@@ -1,5 +1,6 @@
 using System;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stronger.Application.Responses.Exercise;
 using Stronger.Application.UseCases.Exercise;
@@ -34,6 +35,7 @@ public class ExerciseController : BaseController
     [HttpPost]
     [ActionName("CreateBulk")]
     [Route("/api/[Controller]/[Action]")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateBulkAsync([FromBody] List<CreateExerciseCommand> cmds, CancellationToken cancellationToken)
     {
         if (cmds is null || cmds.Count == 0)

@@ -24,7 +24,8 @@ namespace Stronger.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -35,8 +36,7 @@ namespace Stronger.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
-                column: "RoleId",
-                unique: true);
+                column: "RoleId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Roles_RoleId",
