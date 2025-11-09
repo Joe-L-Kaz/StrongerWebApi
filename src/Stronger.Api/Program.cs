@@ -39,12 +39,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services
+    .AddAuthorization()
+    .AddHttpContextAccessor();
 
 builder.Services
-        .AddApiLayer()
-        .AddApplicationLayer()
-        .AddInfrastructureLayer(builder.Configuration);
+    .AddApiLayer()
+    .AddApplicationLayer()
+    .AddInfrastructureLayer(builder.Configuration);
 
 
 var app = builder.Build();

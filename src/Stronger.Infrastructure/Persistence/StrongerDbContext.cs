@@ -11,6 +11,8 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
 {
     public DbSet<UserEntity> Users { get; set; } = null!;
     public DbSet<ExerciseEntity> Exercises { get; set; } = null!;
+    public DbSet<WorkoutPlanEntity> WorkoutPlans { get; set; } = null!;
+    public DbSet<WorkoutPlanExerciseEntity> WorkoutPlanExercises { get; set; } = null!; 
     
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -22,6 +24,8 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
     {
         new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<UserEntity>());
         new ExerciseEntityTypeConfiguration().Configure(modelBuilder.Entity<ExerciseEntity>());
+        new WorkoutPlanEntityTypeConfiguration().Configure(modelBuilder.Entity<WorkoutPlanEntity>());
+        new WorkoutPlanExerciseEntityTypeConfiguration().Configure(modelBuilder.Entity<WorkoutPlanExerciseEntity>());
         base.OnModelCreating(modelBuilder);
     }
 }

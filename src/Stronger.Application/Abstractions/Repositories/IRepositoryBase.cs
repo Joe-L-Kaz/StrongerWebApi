@@ -13,3 +13,12 @@ where TKey : struct
     public Task<IEnumerable<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? predicate, CancellationToken cancellationToken);
     public Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken);
 }
+
+public interface IRepositoryBase<TEntity>
+where TEntity : class
+{
+    public Task AddAsync(TEntity entity, CancellationToken cancellationToken);
+    public void Delete(TEntity entity);
+    public Task<IEnumerable<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? predicate, CancellationToken cancellationToken);
+    public Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
+}
