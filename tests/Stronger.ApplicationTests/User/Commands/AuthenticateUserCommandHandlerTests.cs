@@ -135,6 +135,18 @@ public class AuthenticateUserCommandHandlerTests
                 return repo.Object;
             });
 
+        _repo.Setup(r => r.Roles)
+            .Returns(() =>
+            {
+                Mock<IRoleRepository> repo = new();
+
+                repo
+                    .Setup(r => r.GetByIdAsync(It.IsAny<int>(), CancellationToken.None))
+                    .ReturnsAsync(() => new RoleEntity());
+
+                return repo.Object;
+            }); 
+
         _passwordService
             .Setup(p => p.Verify(It.IsAny<String>(), It.IsAny<String>()))
             .Returns(true);
