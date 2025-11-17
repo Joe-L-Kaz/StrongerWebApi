@@ -9,6 +9,7 @@ using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Responses;
 using Stronger.Domain.Entities;
 using Stronger.Application.Responses.User;
+using Stronger.Domain.Enums;
 
 namespace Stronger.ApplicationTests.User.Commands;
 
@@ -144,7 +145,8 @@ public class AuthenticateUserCommandHandlerTests
                 It.IsAny<String>(),
                 It.IsAny<String>(),
                 It.IsAny<DateOnly>(),
-                It.IsAny<String>()
+                It.IsAny<String>(),
+                Role.User
             ))
             .Returns(String.Empty);
 
