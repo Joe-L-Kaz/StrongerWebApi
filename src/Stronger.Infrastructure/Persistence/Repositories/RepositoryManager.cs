@@ -11,6 +11,7 @@ public class RepositoryManager : IRepositoryManager
     private readonly IExerciseRepository _exercises;
     private readonly IWorkoutPlanRepository _workoutPlans;
     private readonly IWorkoutPlanExerciseRepository _workoutPlanExercises;
+    private readonly IRoleRepository _roles;
 
 
     public RepositoryManager(IStrongerDbContext context)
@@ -20,6 +21,7 @@ public class RepositoryManager : IRepositoryManager
         _exercises = new ExerciseRepository(_context);
         _workoutPlans = new WorkoutPlanRepository(_context);
         _workoutPlanExercises = new WorkoutPlanExerciseRepository(_context);
+        _roles = new RoleRepository(_context);
     }
 
     IUserRepository IRepositoryManager.Users => _users;
@@ -29,6 +31,8 @@ public class RepositoryManager : IRepositoryManager
     IWorkoutPlanRepository IRepositoryManager.WorkoutPlans => _workoutPlans;
 
     IWorkoutPlanExerciseRepository IRepositoryManager.WorkoutPlanExercises => _workoutPlanExercises;
+
+    IRoleRepository IRepositoryManager.Roles => _roles;
 
     async Task IRepositoryManager.SaveChangesAsync(CancellationToken cancellationToken)
     {

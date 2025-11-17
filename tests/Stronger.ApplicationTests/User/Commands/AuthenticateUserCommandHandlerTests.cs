@@ -9,6 +9,7 @@ using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Responses;
 using Stronger.Domain.Entities;
 using Stronger.Application.Responses.User;
+using Stronger.Domain.Enums;
 
 namespace Stronger.ApplicationTests.User.Commands;
 
@@ -134,6 +135,18 @@ public class AuthenticateUserCommandHandlerTests
                 return repo.Object;
             });
 
+        _repo.Setup(r => r.Roles)
+            .Returns(() =>
+            {
+                Mock<IRoleRepository> repo = new();
+
+                repo
+                    .Setup(r => r.GetByIdAsync(It.IsAny<int>(), CancellationToken.None))
+                    .ReturnsAsync(() => new RoleEntity());
+
+                return repo.Object;
+            }); 
+
         _passwordService
             .Setup(p => p.Verify(It.IsAny<String>(), It.IsAny<String>()))
             .Returns(true);
@@ -144,7 +157,8 @@ public class AuthenticateUserCommandHandlerTests
                 It.IsAny<String>(),
                 It.IsAny<String>(),
                 It.IsAny<DateOnly>(),
-                It.IsAny<String>()
+                It.IsAny<String>(),
+                Role.User
             ))
             .Returns(String.Empty);
 

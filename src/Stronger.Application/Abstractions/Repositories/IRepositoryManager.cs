@@ -8,5 +8,6 @@ public interface IRepositoryManager
     public IExerciseRepository Exercises { get; }
     public IWorkoutPlanRepository WorkoutPlans { get; }
     public IWorkoutPlanExerciseRepository WorkoutPlanExercises { get; }
+    public IRoleRepository Roles { get; }
     public Task SaveChangesAsync(CancellationToken cancellationToken);
 }

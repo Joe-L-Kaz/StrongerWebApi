@@ -9,6 +9,7 @@ public interface IStrongerDbContext
     DbSet<UserEntity> Users { get; }
     DbSet<ExerciseEntity> Exercises { get; }
     DbSet<WorkoutPlanEntity> WorkoutPlans { get; }
-    DbSet<WorkoutPlanExerciseEntity> WorkoutPlanExercises{ get; }
+    DbSet<WorkoutPlanExerciseEntity> WorkoutPlanExercises { get; }
+    DbSet<RoleEntity> Roles { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
