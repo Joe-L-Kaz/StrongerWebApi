@@ -14,6 +14,7 @@ public class StrongerDbContext(DbContextOptions<StrongerDbContext> options)
     public DbSet<WorkoutPlanEntity> WorkoutPlans { get; set; } = null!;
     public DbSet<WorkoutPlanExerciseEntity> WorkoutPlanExercises { get; set; } = null!; 
     public DbSet<RoleEntity> Roles { get; set; } = null!;
+    public DbSet<SessionEntity> Sessions { get; set; } = null!
     
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
