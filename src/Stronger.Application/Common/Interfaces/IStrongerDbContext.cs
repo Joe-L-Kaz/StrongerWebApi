@@ -11,5 +11,6 @@ public interface IStrongerDbContext
     DbSet<WorkoutPlanEntity> WorkoutPlans { get; }
     DbSet<WorkoutPlanExerciseEntity> WorkoutPlanExercises { get; }
     DbSet<RoleEntity> Roles { get; }
+    DbSet<SessionEntity> Sessions { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
