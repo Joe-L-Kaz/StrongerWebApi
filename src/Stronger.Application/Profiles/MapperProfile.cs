@@ -1,8 +1,10 @@
 using System;
+using System.Text.Json;
 using AutoMapper;
 using Stronger.Application.Responses.Exercise;
 using Stronger.Application.Responses.WorkoutPlan;
 using Stronger.Application.UseCases.Exercise;
+using Stronger.Application.UseCases.Session;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Application.UseCases.WorkoutPlan.Commands;
 using Stronger.Domain.Entities;
@@ -23,5 +25,15 @@ internal class MapperProfile : Profile
         // Workout plan 
         this.CreateMap<CreateWorkoutPlanCommand, WorkoutPlanEntity>();
         this.CreateMap<WorkoutPlanEntity, RetrieveWorkoutPlanResponse>();
+
+        // Session
+        this.CreateMap<CreateSessionCommand, SessionEntity>()
+            .ForMember(
+                dest => dest.SessionData,
+                opt => opt.MapFrom(src => JsonSerializer.Serialize(
+                    src.SessionData,
+                    (JsonSerializerOptions?)null
+                ))
+            );
     }
 }
