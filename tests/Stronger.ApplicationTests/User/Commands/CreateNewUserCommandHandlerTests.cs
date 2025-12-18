@@ -7,7 +7,7 @@ using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Application.Responses.User;
-using Stronger.Application.UseCases;
+using Stronger.Application.Extensions;
 using Stronger.Application.UseCases.User.Commands;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;

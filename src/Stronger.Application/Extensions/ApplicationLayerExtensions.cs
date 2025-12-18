@@ -3,7 +3,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Stronger.Application.Profiles;
 
-namespace Stronger.Application.UseCases;
+namespace Stronger.Application.Extensions;
 
 public static class ApplicationLayerExtensions
 {
@@ -14,5 +14,4 @@ public static class ApplicationLayerExtensions
             .AddAutoMapper(cfg => {}, typeof(MapperProfile));
         return services;
     }
-
 }

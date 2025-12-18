@@ -1,13 +1,12 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Application.Responses.WorkoutPlan;
-using Stronger.Application.UseCases;
+using Stronger.Application.Extensions;
 using Stronger.Application.UseCases.WorkoutPlan.Commands;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
