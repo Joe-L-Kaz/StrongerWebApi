@@ -1,9 +1,5 @@
-using System;
-using System.Security.Claims;
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Common.Interfaces;
 using Stronger.Application.Responses.Session;
