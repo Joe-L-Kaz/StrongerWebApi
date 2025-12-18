@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Stronger.Api.Extensions;
-using Stronger.Application.UseCases;
+using Stronger.Application.Extensions;
 using Stronger.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

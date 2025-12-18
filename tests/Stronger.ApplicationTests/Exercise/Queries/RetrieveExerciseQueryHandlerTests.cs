@@ -5,7 +5,7 @@ using Moq;
 using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Responses.Exercise;
-using Stronger.Application.UseCases;
+using Stronger.Application.Extensions;
 using Stronger.Application.UseCases.Exercise.Queries;
 using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;

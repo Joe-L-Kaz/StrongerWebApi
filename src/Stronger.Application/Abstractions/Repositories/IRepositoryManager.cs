@@ -9,5 +9,6 @@ public interface IRepositoryManager
     public IWorkoutPlanRepository WorkoutPlans { get; }
     public IWorkoutPlanExerciseRepository WorkoutPlanExercises { get; }
     public IRoleRepository Roles { get; }
+    public ISessionRepository Sessions { get; }
     public Task SaveChangesAsync(CancellationToken cancellationToken);
 }
