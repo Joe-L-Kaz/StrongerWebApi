@@ -4,12 +4,11 @@ namespace Stronger.Domain.Common;
 
 public class Exercise
 {
-    public String ExerciseName { get; set; }
+    public long Id {get; set;}
     public List<SetData> Sets {get; set;}
 
     public Exercise()
     {
-        ExerciseName = String.Empty;
         Sets = new();
     }
 }

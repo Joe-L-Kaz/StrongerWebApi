@@ -35,6 +35,6 @@ public class RepositoryManager : IRepositoryManager
 
     async Task IRepositoryManager.SaveChangesAsync(CancellationToken cancellationToken)
     {
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
