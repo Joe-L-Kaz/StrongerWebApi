@@ -4,5 +4,5 @@ namespace Stronger.Application.Responses.User;
 
 public abstract class UserResponseBase
 {
-    public Guid Id;
+    public Guid Id { get; set; }
 }
