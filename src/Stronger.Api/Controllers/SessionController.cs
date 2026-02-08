@@ -22,4 +22,12 @@ public class SessionController(IMediator mediator) : BaseController(mediator)
         ListSessionsQuery query = new();
         return await this.SendAsync(query, cancellationToken);
     }
+
+    [ActionName("Insights")]
+    [HttpGet]
+    [Route("/api/[controller]/[action]")]
+    public async Task<IActionResult> InsightsAsync(CancellationToken cancellationToken)
+    {
+        return await this.SendAsync(new ListInsightsQuery(), cancellationToken);
+    }
 }

@@ -9,7 +9,7 @@ namespace Stronger.Api.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("/api/[controller]")]
     public abstract class BaseController(IMediator _mediator) : ControllerBase
     {
         private protected async Task<IActionResult> SendAsync<T>(

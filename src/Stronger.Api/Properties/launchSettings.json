@@ -21,3 +21,26 @@
     }
   }
 }
+
+{
+  "plots": {
+    "Barbell Squat": [
+      {
+        "date": "2026-02-08",
+        "maxWeight": 1
+      }
+    ],
+    "Pull-Up": [
+      {
+        "date": "2026-02-08",
+        "maxWeight": 1
+      }
+    ],
+    "Barbell Bench Press": [
+      {
+        "date": "2026-02-08",
+        "maxWeight": 1
+      }
+    ]
+  }
+}
