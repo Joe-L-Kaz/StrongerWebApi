@@ -10,24 +10,24 @@ public class SessionController(IMediator mediator) : BaseController(mediator)
 {
     [ActionName("Create")]
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateSessionCommand command, CancellationToken cancellationToken)
+    public Task<IActionResult> CreateAsync([FromBody] CreateSessionCommand command, CancellationToken cancellationToken)
     {
-        return await this.SendAsync(command, cancellationToken);
+        return this.SendAsync(command, cancellationToken);
     }
 
     [ActionName("List")]
     [HttpGet]
-    public async Task<IActionResult> ListAsync(CancellationToken cancellationToken)
+    public Task<IActionResult> ListAsync(CancellationToken cancellationToken)
     {
         ListSessionsQuery query = new();
-        return await this.SendAsync(query, cancellationToken);
+        return this.SendAsync(query, cancellationToken);
     }
 
     [ActionName("Insights")]
     [HttpGet]
     [Route("/api/[controller]/[action]")]
-    public async Task<IActionResult> InsightsAsync(CancellationToken cancellationToken)
+    public Task<IActionResult> InsightsAsync(CancellationToken cancellationToken)
     {
-        return await this.SendAsync(new ListInsightsQuery(), cancellationToken);
+        return this.SendAsync(new ListInsightsQuery(), cancellationToken);
     }
 }

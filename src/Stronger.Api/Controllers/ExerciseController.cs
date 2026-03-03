@@ -105,16 +105,16 @@ public class ExerciseController : BaseController
 
     [HttpGet]
     [ActionName("Retrieve")]
-    public async Task<IActionResult> RetrieveAsync([FromQuery] long id, CancellationToken cancellationToken)
+    public Task<IActionResult> RetrieveAsync([FromQuery] long id, CancellationToken cancellationToken)
     {
-        return await this.SendAsync(new RetrieveExerciseQuery(id), cancellationToken);
+        return this.SendAsync(new RetrieveExerciseQuery(id), cancellationToken);
     }
 
     [HttpGet]
     [ActionName("List")]
     [Route("/api/[Controller]/[Action]")]
-    public async Task<IActionResult> ListAsync([FromQuery] ListExercisesQuery request, CancellationToken cancellationToken)
+    public Task<IActionResult> ListAsync([FromQuery] ListExercisesQuery request, CancellationToken cancellationToken)
     {
-        return await this.SendAsync(request, cancellationToken);
+        return this.SendAsync(request, cancellationToken);
     }
 }
