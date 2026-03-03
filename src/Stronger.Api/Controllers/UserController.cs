@@ -12,20 +12,18 @@ namespace Stronger.Api.Controllers
     {
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateAsync(CreateNewUserCommand cmd, CancellationToken cancellationToken)
+        public Task<IActionResult> CreateAsync(CreateNewUserCommand cmd, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(cmd);
-            return await this.SendAsync(cmd, cancellationToken);
+            return this.SendAsync(cmd, cancellationToken);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ActionName("Authenticate")]
         [Route("/api/[controller]/[action]")]
-        public async Task<IActionResult> AuthenticateAsync(AuthenticateUserCommand cmd, CancellationToken cancellationToken)
+        public Task<IActionResult> AuthenticateAsync(AuthenticateUserCommand cmd, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(cmd);
-            return await this.SendAsync(cmd, cancellationToken);
+            return this.SendAsync(cmd, cancellationToken);
         }
     }
 }

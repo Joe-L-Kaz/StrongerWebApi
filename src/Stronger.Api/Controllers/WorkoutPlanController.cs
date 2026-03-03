@@ -31,17 +31,17 @@ public class WorkoutPlanController : BaseController
 
     [HttpGet]
     [ActionName("Retrieve")]
-    public async Task<IActionResult> RetrieveAsync([FromQuery] RetrieveWorkoutPlanQuery query, CancellationToken cancellationToken)
+    public Task<IActionResult> RetrieveAsync([FromQuery] RetrieveWorkoutPlanQuery query, CancellationToken cancellationToken)
     {
-        return await this.SendAsync(query, cancellationToken);
+        return this.SendAsync(query, cancellationToken);
     }
 
     [HttpGet]
     [ActionName("List")]
     [Route("/api/[controller]/[action]")]
-    public async Task<IActionResult> ListAsync(CancellationToken cancellationToken)
+    public Task<IActionResult> ListAsync(CancellationToken cancellationToken)
     {
-        return await this.SendAsync(
+        return this.SendAsync(
             new ListWorkoutPlansQuery(),
             cancellationToken
         );

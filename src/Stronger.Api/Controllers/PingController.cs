@@ -13,9 +13,9 @@ namespace Stronger.Api.Controllers
     public class PingController(IMediator mediator) : BaseController(mediator)
     {
         [HttpGet]
-        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        public Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            return await this.SendAsync(new PingQuery(), cancellationToken);
+            return this.SendAsync(new PingQuery(), cancellationToken);
         }
     }
 }
