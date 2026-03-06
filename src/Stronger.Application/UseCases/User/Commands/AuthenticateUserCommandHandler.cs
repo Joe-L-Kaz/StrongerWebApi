@@ -4,13 +4,17 @@ using Stronger.Domain.Entities;
 using Stronger.Domain.Responses;
 using Stronger.Application.Abstractions.Repositories;
 using Stronger.Application.Responses.User;
+using Stronger.Application.Abstractions.HttpClients;
+using Stronger.Application.Requests.NotificationsApiClientRequests;
+using Stronger.Application.Extensions;
 
 namespace Stronger.Application.UseCases.User.Commands;
 
 public class AuthenticateUserCommandHandler(
     IRepositoryManager repository,
     ITokenService tokenService,
-    IPasswordService passwordService
+    IPasswordService passwordService,
+    IStrongerNotificationsApiClient notificationsApiClient
 ) : IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>>
 {
     async Task<Response<AuthenticateUserResponse>> IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>>.Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
@@ -75,6 +79,19 @@ public class AuthenticateUserCommandHandler(
         String accessToken = tokenService.GenerateToken(
             user.Id, user.Forename, user.Surname, user.Dob, user.Email, role.Role
         );
+
+        if (!String.IsNullOrEmpty(request.DeviceToken))
+        {
+            RegisterUserDeviceRequest deviceRequest = new(
+                user.Id,
+                request.DeviceToken,
+                request.DeviceType,
+                1,
+                user.Forename
+            );
+
+            _ = notificationsApiClient.RegisterUserDevice(deviceRequest, cancellationToken);
+        }
 
         return new Response<AuthenticateUserResponse>
         {
