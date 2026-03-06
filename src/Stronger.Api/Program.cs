@@ -3,8 +3,10 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Stronger.Api.Extensions;
+using Stronger.Application.Abstractions.HttpClients;
 using Stronger.Application.Extensions;
 using Stronger.Infrastructure;
+using Stronger.Infrastructure.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,38 @@ builder.Services.AddControllers()
     });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+
+builder.Services.AddHttpClient<IStrongerNotificationsApiClient, StrongerNotificationsApiClient>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var section = config.GetSection("NotificationsApiConfiguration");
+
+    var baseAddress = section["NotificationsApiBaseAddress"];
+    if (string.IsNullOrWhiteSpace(baseAddress))
+        throw new InvalidOperationException("NotificationsApiConfiguration:NotificationsApiBaseAddress is required.");
+
+    var apiKey = section["NotificationsApiKey"];
+    if (string.IsNullOrWhiteSpace(apiKey))
+        throw new InvalidOperationException("NotificationsApiConfiguration:NotificationsApiKey is required.");
+
+    var apiKeyHeaderName = section["ApiKeyHeaderName"];
+    if (string.IsNullOrWhiteSpace(apiKeyHeaderName))
+        apiKeyHeaderName = "X-API-Key";
+
+    client.BaseAddress = new Uri(baseAddress);
+
+    // Optional default headers
+    client.DefaultRequestHeaders.Accept.Clear();
+    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+    // API key for every request
+    client.DefaultRequestHeaders.Remove(apiKeyHeaderName);
+    client.DefaultRequestHeaders.Add(apiKeyHeaderName, apiKey);
+
+    // Optional timeout
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -61,4 +95,4 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+await app.RunAsync();

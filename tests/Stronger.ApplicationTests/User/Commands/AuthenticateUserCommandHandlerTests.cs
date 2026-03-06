@@ -10,22 +10,25 @@ using Stronger.Domain.Responses;
 using Stronger.Domain.Entities;
 using Stronger.Application.Responses.User;
 using Stronger.Domain.Enums;
+using Stronger.Application.Abstractions.HttpClients;
 
 namespace Stronger.ApplicationTests.User.Commands;
 
 [TestClass]
 public class AuthenticateUserCommandHandlerTests
 {
-    Mock<IRepositoryManager> _repo;
-    Mock<ITokenService> _tokenService;
-    Mock<IPasswordService> _passwordService;
-    IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>> _handler;
+    readonly Mock<IRepositoryManager> _repo;
+    readonly Mock<ITokenService> _tokenService;
+    readonly Mock<IPasswordService> _passwordService;
+    readonly Mock<IStrongerNotificationsApiClient> _notifications;
+    readonly IRequestHandler<AuthenticateUserCommand, Response<AuthenticateUserResponse>> _handler;
 
     public AuthenticateUserCommandHandlerTests()
     {
         _repo = new Mock<IRepositoryManager>();
         _tokenService = new Mock<ITokenService>();
         _passwordService = new Mock<IPasswordService>();
+        _notifications = new Mock<IStrongerNotificationsApiClient>();
 
         IServiceCollection services = new ServiceCollection();
         services
@@ -35,6 +38,7 @@ public class AuthenticateUserCommandHandlerTests
         services.AddSingleton(_repo.Object);
         services.AddSingleton(_tokenService.Object);
         services.AddSingleton(_passwordService.Object);
+        services.AddSingleton(_notifications.Object);
 
         var provider = services.BuildServiceProvider();
 
@@ -57,7 +61,9 @@ public class AuthenticateUserCommandHandlerTests
         // Arrange
         AuthenticateUserCommand cmd = new(
             "Some@Email.com",
-            "SomePassword"
+            "SomePassword",
+            "",
+            ""
         );
 
         _repo
@@ -86,7 +92,9 @@ public class AuthenticateUserCommandHandlerTests
         // Arrange
         AuthenticateUserCommand cmd = new(
             "Some@Email.com",
-            "SomePassword"
+            "SomePassword",
+            "",
+            ""
         );
 
         _repo
@@ -119,7 +127,9 @@ public class AuthenticateUserCommandHandlerTests
         // Arrange
         AuthenticateUserCommand cmd = new(
             "Some@Email.com",
-            "SomePassword"
+            "SomePassword",
+            "",
+            ""
         );
 
         _repo
