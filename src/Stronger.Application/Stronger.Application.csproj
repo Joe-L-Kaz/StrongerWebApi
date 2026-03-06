@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Abstractions/HttpClients/" />
     <Folder Include="Extensions\" />
+    <Folder Include="Responses/NotificationClient/" />
     <Folder Include="Responses/Session/Insight/" />
     <Folder Include="UseCases\Session\Query\" />
   </ItemGroup>
