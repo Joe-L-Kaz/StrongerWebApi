@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Http;
 using System;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stronger.Application.Responses.Exercise;
 using Stronger.Application.UseCases.Exercise;
+using Stronger.Application.UseCases.Exercise.Commands;
 using Stronger.Application.UseCases.Exercise.Queries;
 using Stronger.Domain.Responses;
 
@@ -101,6 +103,17 @@ public class ExerciseController : BaseController
         };
 
         return StatusCode(fail.StatusCode, fail);
+    }
+
+    [HttpPost]
+    [ActionName("CreateBulkCsv")]
+    [Route("/api/[controller]/[action]")]
+    [Consumes("multipart/form-data")]
+    [Authorize(Roles = "Admin")]
+    public Task<IActionResult> CreateBulkCsvAsync([FromForm] IFormFile file, CancellationToken cancellationToken)
+    {
+        CreateBulkExerciseCsvCommand command = new(file);
+        return this.SendAsync(command, cancellationToken);
     }
 
     [HttpGet]
