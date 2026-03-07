@@ -25,5 +25,13 @@ namespace Stronger.Api.Controllers
         {
             return this.SendAsync(cmd, cancellationToken);
         }
+
+        [HttpPut]
+        [ActionName("SetTrainingDays")]
+        public Task<IActionResult> UpdateTrainingDaysAsync([FromQuery] short bitMask, CancellationToken cancellationToken)
+        {
+            SetTrainingDaysCommand command = new(bitMask);
+            return this.SendAsync(command, cancellationToken);
+        }
     }
 }

@@ -90,7 +90,7 @@ public class AuthenticateUserCommandHandler(
                 user.Forename
             );
 
-            _ = notificationsApiClient.RegisterUserDevice(deviceRequest, cancellationToken);
+            _ = notificationsApiClient.RegisterUserDeviceAsync(deviceRequest, cancellationToken);
         }
 
         return new Response<AuthenticateUserResponse>
