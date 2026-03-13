@@ -119,7 +119,7 @@ static async Task ApplyMigrationsWithRetryAsync(IServiceProvider services, ILogg
             var db = scope.ServiceProvider.GetRequiredService<StrongerDbContext>();
 
             logger.LogInformation("Applying database migrations (attempt {Attempt}/{Max})...", attempt, maxAttempts);
-
+            
             await db.Database.MigrateAsync();
 
             logger.LogInformation("Database migrations applied successfully.");
