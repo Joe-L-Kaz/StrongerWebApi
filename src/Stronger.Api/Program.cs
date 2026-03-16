@@ -1,12 +1,14 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Stronger.Api.Extensions;
 using Stronger.Application.Abstractions.HttpClients;
 using Stronger.Application.Extensions;
 using Stronger.Infrastructure;
 using Stronger.Infrastructure.HttpClients;
+using Stronger.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +87,9 @@ builder.Services
 
 var app = builder.Build();
 
+await ApplyMigrationsWithRetryAsync(app.Services, app.Logger);
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -96,3 +101,36 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 await app.RunAsync();
+
+
+
+static async Task ApplyMigrationsWithRetryAsync(IServiceProvider services, ILogger logger)
+{
+    const int maxAttempts = 10;
+    var delay = TimeSpan.FromSeconds(2);
+
+    for (var attempt = 1; attempt <= maxAttempts; attempt++)
+    {
+        try
+        {
+            using var scope = services.CreateScope();
+
+            // Replace StrongerDbContext with YOUR DbContext type
+            var db = scope.ServiceProvider.GetRequiredService<StrongerDbContext>();
+
+            logger.LogInformation("Applying database migrations (attempt {Attempt}/{Max})...", attempt, maxAttempts);
+            
+            await db.Database.MigrateAsync();
+
+            logger.LogInformation("Database migrations applied successfully.");
+            return;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Migration attempt {Attempt} failed. Retrying in {Delay}...", attempt, delay);
+            await Task.Delay(delay);
+        }
+    }
+
+    throw new InvalidOperationException("Failed to apply database migrations after multiple attempts.");
+}

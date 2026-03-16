@@ -9,13 +9,6 @@ public sealed class StrongerNotificationsApiClient : IStrongerNotificationsApiCl
 
     public StrongerNotificationsApiClient(IConfiguration config, HttpClient httpClient)
     {
-        // String baseAddress = config["NotificationsApiConfiguration:NotificationsApiBaseAddress"] ?? throw new ArgumentException("NotificationsApiBaseAddress configuration is required.", nameof(config));
-        // String apiKey = config["NotificationsApiConfiguration:NotificationsApiKey"] ?? throw new ArgumentException("NotificationsApiKey configuration is required.", nameof(config));
-        // String apiKeyHeaderName = config["NotificationsApiConfiguration:ApiKeyHeaderName"] ?? throw new ArgumentException("ApiKeyHeaderName configuration is required.", nameof(config));
-
-        // httpClient.BaseAddress = new Uri(baseAddress);
-        // httpClient.DefaultRequestHeaders.Add(apiKeyHeaderName, apiKey);
-
         _client = httpClient;
     }
 
