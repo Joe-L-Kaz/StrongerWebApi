@@ -42,15 +42,12 @@ builder.Services.AddHttpClient<IStrongerNotificationsApiClient, StrongerNotifica
 
     client.BaseAddress = new Uri(baseAddress);
 
-    // Optional default headers
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-    // API key for every request
     client.DefaultRequestHeaders.Remove(apiKeyHeaderName);
     client.DefaultRequestHeaders.Add(apiKeyHeaderName, apiKey);
 
-    // Optional timeout
     client.Timeout = TimeSpan.FromSeconds(30);
 });
 
