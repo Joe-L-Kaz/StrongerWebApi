@@ -87,7 +87,7 @@ builder.Services
 
 var app = builder.Build();
 
-await ApplyMigrationsWithRetryAsync(app.Services, app.Logger);
+//await ApplyMigrationsWithRetryAsync(app.Services, app.Logger);
 
 
 // Configure the HTTP request pipeline.
