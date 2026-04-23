@@ -30,7 +30,6 @@ public class ListInsightsQueryHandler(
         Guid userId = new Guid(claims.UserId);
 
         IEnumerable<SessionEntity> userSessions = await repository.Sessions.ListAsync(session => session.UserId == userId, cancellationToken);
-        //userSessions = userSessions.OrderBy(u => u.CreatedAt);
 
         List<SessionData> userSessionData = new List<SessionData>();
 
@@ -48,17 +47,14 @@ public class ListInsightsQueryHandler(
 
         InsightsResponse insights = new();
 
-        // Process sessions in chronological order (optional but useful for graphing)
         foreach (var session in userSessionData.OrderBy(s => s.Date))
         {
             foreach (var exercise in session.Exercises)
             {
-                // Resolve name; fall back to id if missing in cache
                 string exerciseName = exerciseNameCache.TryGetValue(exercise.Id, out var name)
                     ? name
                     : $"Exercise:{exercise.Id}";
 
-                // Ignore null weights (e.g., cardio sets)
                 var weights = exercise.Sets
                     .Select(s => s.Weight)
                     .Where(w => w.HasValue)
@@ -85,7 +81,6 @@ public class ListInsightsQueryHandler(
             }
         }
 
-        // Optional: ensure each exercise plot list is sorted by date
         foreach (var kvp in insights.Plots)
         {
             kvp.Value.Sort((a, b) => a.Date.CompareTo(b.Date));
